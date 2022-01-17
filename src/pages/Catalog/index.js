@@ -5,9 +5,9 @@ import CatalogFilters from "../../components/Catalog/CatalogFilters/CatalogFilte
 
 const Catalog = () => {
     return (
-        <Grid container marginTop={5}>
+        <Grid container marginTop={5} spacing={10}>
             <Grid item xl={3}>
-                <Typography variant="h3" component="h3">
+                <Typography mb={5} variant="h3" component="h3">
                     Filters
                 </Typography>
                 <CatalogFilters/>

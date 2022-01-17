@@ -6,6 +6,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ThemeSwitcher from "../UI/ThemeSwitcher/ThemeSwitcher";
 import Link from '../UI/Link/Link'
 import HeaderNavigation from "../Navigation/HeaderNavigation";
+import {useLocation} from "react-router";
+import FindByName from "../Catalog/CatalogFilters/FindByName";
 
 const pages = ['About', 'Catalog'];
 
@@ -20,6 +22,8 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 
 const Header = () => {
+    const location = useLocation()
+
     const handleOpenNavMenu = (event) => {
     };
     const handleOpenUserMenu = (event) => {
@@ -62,6 +66,10 @@ const Header = () => {
                             <HeaderNavigation/>
                         </Box>
                     </Box>
+
+                    {
+                        location.pathname === '/catalog' && <Box mr={10}><FindByName/></Box>
+                    }
 
                     <Box sx={{ flexGrow: 0, display: "flex" }}>
                         <ThemeSwitcher sx={{ m: 1 }} defaultChecked />
