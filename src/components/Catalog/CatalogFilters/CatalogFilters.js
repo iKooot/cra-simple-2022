@@ -6,7 +6,7 @@ function valuetext(value) {
 }
 
 const CatalogFilters = () => {
-    const [value, setValue] = React.useState([20, 37]);
+    const [value, setValue] = React.useState([20, 300]);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -14,18 +14,19 @@ const CatalogFilters = () => {
 
     return (
         <form>
-            <FormGroup>
-                <Box mb={2} maxWidth="75%">
+            <FormGroup  sx={{gap: "20px", marginBottom: "20px"}}>
+                <Box maxWidth="75%">
                     <FormLabel component="legend">By price:</FormLabel>
                     <Slider
-                        getAriaLabel={() => 'Temperature range'}
                         value={value}
                         onChange={handleChange}
                         valueLabelDisplay="auto"
                         getAriaValueText={valuetext}
+                        max={1000}
+                        min={20}
                     />
                 </Box>
-                <Box mb={2}>
+                <Box>
                     <FormLabel component="legend">By type:</FormLabel>
                     <RadioGroup
                         aria-label="type"
@@ -38,7 +39,7 @@ const CatalogFilters = () => {
                         <FormControlLabel value="accessories" control={<Radio />} label="Accessories" />
                     </RadioGroup>
                 </Box>
-                <Box mb={2} sx={{display: "flex", flexDirection: "column"}}>
+                <Box sx={{display: "flex", flexDirection: "column"}}>
                     <FormLabel component="legend">By brand:</FormLabel>
                     <FormControlLabel control={<Checkbox />} label="Puma" />
                     <FormControlLabel control={<Checkbox />} label="Reebok" />
