@@ -11,6 +11,7 @@ import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/s
 import { getDesignTokens } from "./services/material-theme";
 import {useSelector} from "react-redux";
 import Contacts from "./pages/Contacts";
+import ItemPage from "./pages/Item";
 
 
 export function App() {
@@ -23,8 +24,9 @@ export function App() {
               <CssBaseline />
               <Routes>
                   <Route path="/about" element={<About />} />
-                  <Route path="/catalog" element={<Catalog />} />
-                  <Route path="/contacts" element={<Contacts />} />
+                  <Route path="/catalog" element={<Catalog />} exact/>
+                  <Route path="/catalog/:cardId" element={<ItemPage />} />
+                  <Route path="/contacts" element={<Contacts />}/>
                   <Route path="/"  exact={true} element={<Home />} />
                   <Route path="*" element={<NotFound />} />
               </Routes>

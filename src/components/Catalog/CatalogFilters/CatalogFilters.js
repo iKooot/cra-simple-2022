@@ -15,7 +15,7 @@ const CatalogFilters = () => {
     return (
         <form>
             <FormGroup>
-                <Box mb={2}>
+                <Box mb={2} maxWidth="75%">
                     <FormLabel component="legend">By price:</FormLabel>
                     <Slider
                         getAriaLabel={() => 'Temperature range'}

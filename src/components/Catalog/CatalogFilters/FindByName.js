@@ -7,14 +7,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
         width: '100%',
+        borderBottom: `1px solid ${theme.palette.divider}`,
         [theme.breakpoints.up('sm')]: {
-            width: '12ch',
+            width: '15ch',
             '&:focus': {
-                width: '20ch',
+                width: '25ch',
             },
         },
     },
@@ -28,7 +28,7 @@ const FindByName = () => {
                 <SearchIcon />
             </Box>
             <StyledInputBase
-                placeholder="Search…"
+                placeholder="Search in catalog…"
                 inputProps={{ 'aria-label': 'search' }}
             />
         </Box>
