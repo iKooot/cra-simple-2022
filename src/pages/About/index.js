@@ -82,10 +82,20 @@ const About = () => {
                         <ImageList
                             variant="quilted"
                             cols={4}
-                            rowHeight={200}
+                            rowHeight={250}
+                            gap={10}
+                            sx={{overflow: "visible"}}
                         >
-                            {itemData.map((item) => (
-                                <ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1}>
+                            {itemData.map((item, i) => (
+                                <ImageListItem
+                                    key={item.img}
+                                    cols={item.cols || 1} rows={item.rows || 1}
+                                    sx={{
+                                        borderRadius: "5px",
+                                        border: "5px solid #2d334a",
+                                        transform: `rotate(${ i % 2 === 0 ? 2 * (i + 1) :  -2 * (i + 1)}deg)`
+                                    }}
+                                >
                                     <img
                                         {...srcset(item.img, 300, item.rows, item.cols)}
                                         alt={item.title}
@@ -104,7 +114,7 @@ const About = () => {
                     </Typography>
                     <Grid container spacing={10}>
                         {featureData.map( feature =>  (
-                            <Grid item xl={3}>
+                            <Grid item xl={3} key={feature.title}>
                                 <FeatureItem title={feature.title} text={feature.text} icon={<feature.icon sx={{ fontSize: 40 }}/>} />
                             </Grid>
                         ))}

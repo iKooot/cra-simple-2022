@@ -1,6 +1,6 @@
 import React from 'react';
-import { Container, Grid} from '@mui/material'
-import Header from '../Header/Header'
+import { Grid} from '@mui/material';
+import Header from '../Header/Header';
 import Footer from "../Footer/Footer";
 
 
@@ -12,7 +12,7 @@ const LayoutPage = ({children}) => {
             gridTemplateColumns: "1fr",
             gridTemplateRows: "auto 1fr auto",
         }}>
-            <Grid item mb={10}>
+            <Grid item mb={2}>
                 <Header />
             </Grid>
             <Grid item overflow="hidden">
