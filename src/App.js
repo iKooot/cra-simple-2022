@@ -20,11 +20,11 @@ export function App() {
     const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
     return (
         <ThemeProvider theme={responsiveFontSizes(theme)}>
-          <LayoutPage>
-              <CssBaseline />
+            <CssBaseline />
+            <LayoutPage>
               <Routes>
                   <Route path="/about" element={<About />} />
-                  <Route path="/catalog" element={<Catalog />} exact/>
+                  <Route path="/catalog" element={<Catalog />} exact={true}/>
                   <Route path="/catalog/:cardId" element={<ItemPage />} />
                   <Route path="/contacts" element={<Contacts />}/>
                   <Route path="/"  exact={true} element={<Home />} />

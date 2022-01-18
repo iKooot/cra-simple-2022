@@ -41,7 +41,7 @@ export const getDesignTokens = (mode) => ({
                     background: '#fffffe',
                     heading: '#272343',
                     subHeading: '#2d334a',
-                    paragraph: '#fffffe',
+                    paragraph: '#2d334a',
                     button: '#bae8e8',
                     buttonText: '#fffffe',
                     stroke: '#bae8e8',
@@ -50,7 +50,7 @@ export const getDesignTokens = (mode) => ({
                     background: '#272343',
                     heading: '#fffffe',
                     subHeading: '#2d334a',
-                    paragraph: '#2d334a',
+                    paragraph: '#fffffe',
                     button: '#ffd803',
                     buttonText: '#272343',
                     stroke: '#272343',
@@ -82,13 +82,13 @@ export const getDesignTokens = (mode) => ({
                     default: '#0f0e17',
                     paper: '#27253c'
                 },
-                sectionLight: {
+                sectionDark: {
                     background:'#fffffe',
                     headline: '#0f0e17',
                     paragraph: '#2e2f3e',
                     link: '#e53170',
                 },
-                sectionDark: {
+                sectionLight: {
                     background:'#0f0e17',
                     headline: '#fffffe',
                     paragraph: '#a7a9be',
@@ -101,7 +101,7 @@ export const getDesignTokens = (mode) => ({
                     button: '#e53170',
                     buttonText: '#fffffe',
                 },
-                cardLight: {
+                cardDark: {
                     background: '#fffffe',
                     heading: '#0f0e17',
                     subHeading: '#211f34',
@@ -110,7 +110,7 @@ export const getDesignTokens = (mode) => ({
                     buttonText: '#fffffe',
                     stroke: '#e53170',
                 },
-                cardDark: {
+                cardLight: {
                     background: '#0f0e17',
                     heading: '#fffffe',
                     subHeading: '#2e2f3e',
