@@ -1,7 +1,7 @@
 import React from 'react';
 import {Switch, FormGroup, FormControlLabel} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
-import {themeActions} from '../../../store/reducers/theme.reducer'
+import {themeActions} from '../../../store/theme/theme.state'
 
 const ThemeSwitcher = () => {
     const dispatch = useDispatch()
