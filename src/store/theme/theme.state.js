@@ -3,7 +3,7 @@ import * as themeReducers from './reducers/theme.reducers';
 import * as themeActions from './actions/theme.actions'
 
 export const INITIAL_STATE = {
-    mode: 'light'
+    mode: 'dark'
 }
 
 const themeReducer = createReducer(INITIAL_STATE, (builder) => {

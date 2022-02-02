@@ -1,20 +1,18 @@
 import React from 'react';
-import {Button, List, ListItem} from '@mui/material';
-import {navigation} from '../../utils/navigation';
-import NavLink from "../UI/NavLink/NavLink";
+import {List, ListItem} from '@mui/material';
+import {MyNavLink} from "../UI";
+import { routesConfig } from '../../navigation/routesConfig'
 
-const Navigation = () => {
+export const Navigation = () => {
     return (
         <nav style={{width: "100%"}}>
            <List sx={{display: 'flex', justifyContent: "space-between"}}>
-               {navigation.map( page => (
-                   <ListItem key={page.path} sx={{ justifyContent: "center"}}>
-                       <NavLink path={page.path}>{page.label}</NavLink>
+               {routesConfig.filter( route => route.id !== 'cart' && route.id !== '404' && route.id !== 'product').map( route => (
+                   <ListItem key={route.id} sx={{ justifyContent: "center"}}>
+                       <MyNavLink path={route.path}>{route.pageTitle}</MyNavLink>
                    </ListItem>
                ))}
            </List>
         </nav>
     );
 };
-
-export default Navigation;
