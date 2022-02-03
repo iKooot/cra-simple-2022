@@ -8,6 +8,16 @@ export function loadProductsFailed(state, {payload}) {
     state.status = 'error'
 }
 
+export function loadProductsCategorySuccess(state, {payload}) {
+    state.productsCategory.categories = payload
+    state.productsCategory.status = 'success'
+}
+
+export function loadProductsCategoryFailed(state, {payload}) {
+    state.productsCategory.error = payload.message
+    state.productsCategory.status = 'error'
+}
+
 export function setCurrentPage(state, {payload}) {
     state.pagination.currantPage = payload
 }

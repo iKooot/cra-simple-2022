@@ -11,8 +11,11 @@ import {
   RadioGroup,
   FormLabel,
   Radio,
-  Switch
+  Switch,
 } from "@mui/material";
+import { useGetCategories } from "../../hooks/useGetCategories";
+import { Loader } from "../UI";
+import { Error } from "../Error";
 
 function valuetext(value) {
   return `${value}°C`;
@@ -21,6 +24,8 @@ function valuetext(value) {
 export const CatalogFilters = () => {
   const [priceValue, setPriceValue] = React.useState([0, 1000]);
   const [ratingValue, setRatingValue] = React.useState([0, 5]);
+
+  const { categories, status, error } = useGetCategories();
 
   const handlePriceChange = (event, newValue) => {
     setPriceValue(newValue);
@@ -33,8 +38,10 @@ export const CatalogFilters = () => {
   return (
     <form>
       <FormGroup sx={{ gap: "20px", marginBottom: "20px" }}>
-        <Box maxWidth="75%">
-          <FormLabel component="legend">By price:</FormLabel>
+        <FormGroup sx={{ maxWidth: "75%" }}>
+          <FormLabel sx={{ color: "sectionLight.headline" }} component="legend">
+            By price:
+          </FormLabel>
           <Slider
             value={priceValue}
             onChange={handlePriceChange}
@@ -43,9 +50,11 @@ export const CatalogFilters = () => {
             max={1000}
             min={20}
           />
-        </Box>
-        <Box maxWidth="75%">
-          <FormLabel component="legend">By rating:</FormLabel>
+        </FormGroup>
+        <FormGroup sx={{ maxWidth: "75%" }}>
+          <FormLabel sx={{ color: "sectionLight.headline" }} component="legend">
+            By rating:
+          </FormLabel>
           <Slider
             value={ratingValue}
             onChange={handleRatingChange}
@@ -54,9 +63,27 @@ export const CatalogFilters = () => {
             max={5}
             min={0}
           />
-        </Box>
+        </FormGroup>
         <FormGroup>
-          <FormControlLabel control={<Switch />} label="New collection" />
+          <FormControlLabel control={<Switch />} label="By new collection" />
+          <FormControlLabel control={<Switch />} label="By sale" />
+          <FormControlLabel control={<Switch />} label="By availability" />
+          <FormControlLabel control={<Switch />} label="On sale" />
+        </FormGroup>
+        <FormGroup>
+          <FormLabel sx={{ color: "sectionLight.headline" }} component="legend">
+            By categories
+          </FormLabel>
+          {status === "loading" && <Loader />}
+          {status === "success" &&
+            categories.map((category) => (
+              <FormControlLabel
+                key={category.name}
+                control={<Checkbox name={category.name} />}
+                label={category.name}
+              />
+            ))}
+          {status === "error" && <Error errorMessage={error} />}
         </FormGroup>
       </FormGroup>
       <Button variant="contained">Filter</Button>

@@ -9,7 +9,7 @@ export function useGetProducts() {
 
     useEffect(async () => {
         if (!products) {
-            dispatch(productsActions.loadProducts());
+            await dispatch(productsActions.loadProducts());
         }
     }, [products]);
 
