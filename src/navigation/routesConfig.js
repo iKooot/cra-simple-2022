@@ -4,6 +4,7 @@ export const routesId = {
   catalog: "catalog",
   product: "product",
   cart: "cart",
+  order: "order",
   delivery: "delivery",
   contacts: "contacts",
   404: "404",
@@ -15,7 +16,8 @@ export const routesConfig = [
   { id: routesId.catalog, path: "/catalog", pageTitle: "Catalog" },
   { id: routesId.product, path: "/catalog/:cardId", pageTitle: "Product" },
   { id: routesId.cart, path: "/cart", pageTitle: "Cart" },
+  { id: routesId.order, path: "/order", pageTitle: "Order" },
   { id: routesId.delivery, path: "/delivery", pageTitle: "Delivery" },
   { id: routesId.contacts, path: "/contacts", pageTitle: "Contacts" },
-  { id: routesId["404"], path: "*", pageTitle: "Page not found" },
+  { id: routesId["404"], path: "/*", pageTitle: "Page not found" },
 ];
