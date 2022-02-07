@@ -1,14 +1,15 @@
+import React from 'react';
 import { routesConfig, routesId } from "./routesConfig";
 
-import Home from "../pages/Home";
-import About from "../pages/About";
-import Catalog from "../pages/Catalog";
-import Contacts from "../pages/Contacts";
-import NotFound from "../pages/NotFound";
-import ProductPage from "../pages/Product";
-import Delivery from "../pages/Delivery";
-import OrderPage from "../pages/Order";
-import CartPage from "../pages/Cart";
+const Home = React.lazy(() => import('../pages/Home/index'))
+const About = React.lazy(() => import('../pages/About/index'))
+const Catalog = React.lazy(() => import('../pages/Catalog/index'))
+const Contacts = React.lazy(() => import('../pages/Contacts/index'))
+const NotFound = React.lazy(() => import('../pages/NotFound/index'))
+const ProductPage = React.lazy(() => import('../pages/Product/index'))
+const Delivery = React.lazy(() => import('../pages/Delivery/index'))
+const OrderPage = React.lazy(() => import('../pages/Order/index'))
+const CartPage = React.lazy(() => import('../pages/Cart/index'))
 
 const renderMap = {
   [routesId.home]: Home,

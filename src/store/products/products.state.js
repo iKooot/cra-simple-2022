@@ -16,8 +16,8 @@ export const INITIAL_STATE = {
     byRating: null,
     byNew: false,
     bySale: false,
-    byAvailability: false,
-    byCategory: null,
+    byStock: false,
+    byCategory: [],
   },
   pagination: {
     currantPage: 1,
@@ -41,6 +41,10 @@ const productsReducer = createReducer(INITIAL_STATE, (builder) => {
   builder.addCase(
       productsActions.loadProductsCategoryFailed,
       productsReducers.loadProductsCategoryFailed
+  );
+  builder.addCase(
+      productsActions.setProductsFilters,
+      productsReducers.setProductsFilters
   );
   builder.addCase(
     productsActions.setCurrentPage,

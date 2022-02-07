@@ -18,6 +18,10 @@ export function loadProductsCategoryFailed(state, {payload}) {
     state.productsCategory.status = 'error'
 }
 
+export function setProductsFilters(state, {payload}) {
+    state.filters = {...payload}
+}
+
 export function setCurrentPage(state, {payload}) {
     state.pagination.currantPage = payload
 }

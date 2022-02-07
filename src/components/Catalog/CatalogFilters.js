@@ -1,38 +1,57 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
-  Box,
   Button,
-  ListItem,
-  Typography,
   Slider,
   FormGroup,
   FormControlLabel,
   Checkbox,
-  RadioGroup,
   FormLabel,
-  Radio,
   Switch,
 } from "@mui/material";
 import { useGetCategories } from "../../hooks/useGetCategories";
 import { Loader } from "../UI";
 import { Error } from "../Error";
+import { useSetFilters } from "../../hooks/useSetFilters";
 
 function valuetext(value) {
   return `${value}°C`;
 }
 
 export const CatalogFilters = () => {
-  const [priceValue, setPriceValue] = React.useState([0, 1000]);
-  const [ratingValue, setRatingValue] = React.useState([0, 5]);
-
+  const { filters, setFilters, initialValues, dispatchFilters } =
+    useSetFilters();
   const { categories, status, error } = useGetCategories();
 
-  const handlePriceChange = (event, newValue) => {
-    setPriceValue(newValue);
+  const changeHandler = (event, newValue) => {
+    setFilters((prevState) => ({
+      ...prevState,
+      [event.target.name]: newValue,
+    }));
   };
 
-  const handleRatingChange = (event, newValue) => {
-    setRatingValue(newValue);
+  const categoryChangeHandler = (event, newValue) => {
+    setFilters((prevState) => {
+      const checkedCategories = [...prevState.byCategory];
+      const checkboxIndex = checkedCategories.findIndex(
+        (el) => el.name === event.target.name
+      );
+      if (checkboxIndex < 0) {
+        checkedCategories.push({
+          name: event.target.name,
+          id: event.target.id,
+        });
+      } else {
+        checkedCategories.splice(checkboxIndex, 1);
+      }
+      return {
+        ...prevState,
+        byCategory: checkedCategories,
+      };
+    });
+  };
+
+  const submitFilters = () => {
+    dispatchFilters();
   };
 
   return (
@@ -43,12 +62,13 @@ export const CatalogFilters = () => {
             By price:
           </FormLabel>
           <Slider
-            value={priceValue}
-            onChange={handlePriceChange}
+            name="byPrice"
+            value={filters.byPrice}
+            onChange={changeHandler}
             valueLabelDisplay="auto"
             getAriaValueText={valuetext}
-            max={1000}
-            min={20}
+            max={initialValues.price[1]}
+            min={initialValues.price[0]}
           />
         </FormGroup>
         <FormGroup sx={{ maxWidth: "75%" }}>
@@ -56,19 +76,46 @@ export const CatalogFilters = () => {
             By rating:
           </FormLabel>
           <Slider
-            value={ratingValue}
-            onChange={handleRatingChange}
+            name="byRating"
+            value={filters.byRating}
+            onChange={changeHandler}
             valueLabelDisplay="auto"
             getAriaValueText={valuetext}
-            max={5}
-            min={0}
+            max={initialValues.rating[1]}
+            min={initialValues.rating[0]}
           />
         </FormGroup>
         <FormGroup>
-          <FormControlLabel control={<Switch />} label="By new collection" />
-          <FormControlLabel control={<Switch />} label="By sale" />
-          <FormControlLabel control={<Switch />} label="By availability" />
-          <FormControlLabel control={<Switch />} label="On sale" />
+          <FormControlLabel
+            control={
+              <Switch
+                value={filters.byNew}
+                name="byNew"
+                onChange={changeHandler}
+              />
+            }
+            label="By new collection"
+          />
+          <FormControlLabel
+            control={
+              <Switch
+                value={filters.bySale}
+                name="bySale"
+                onChange={changeHandler}
+              />
+            }
+            label="By sale"
+          />
+          <FormControlLabel
+            control={
+              <Switch
+                value={filters.byStock}
+                name="byStock"
+                onChange={changeHandler}
+              />
+            }
+            label="By stock"
+          />
         </FormGroup>
         <FormGroup>
           <FormLabel sx={{ color: "sectionLight.headline" }} component="legend">
@@ -79,14 +126,25 @@ export const CatalogFilters = () => {
             categories.map((category) => (
               <FormControlLabel
                 key={category.name}
-                control={<Checkbox name={category.name} />}
+                control={
+                  <Checkbox
+                    checked={
+                      !!filters.byCategory.find((el) => el.id === category.id)
+                    }
+                    name={category.name}
+                    id={category.id}
+                    onChange={categoryChangeHandler}
+                  />
+                }
                 label={category.name}
               />
             ))}
           {status === "error" && <Error errorMessage={error} />}
         </FormGroup>
       </FormGroup>
-      <Button variant="contained">Filter</Button>
+      <Button onClick={submitFilters} variant="contained">
+        Filter
+      </Button>
     </form>
   );
 };
