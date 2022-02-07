@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React from "react";
 import {
   Grid,
   Card,
@@ -11,6 +11,8 @@ import {
   List,
   Button,
   ButtonGroup,
+  CardActions,
+  CardActionArea,
 } from "@mui/material";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
@@ -22,31 +24,27 @@ export const CatalogItem = ({ attrs, product }) => {
     (state) => state.products.productsCategory
   );
 
-  useEffect(() => {
-    console.log('render item')
-  })
-
   const categoriesList =
     categories && getProductCategoriesById(categories, product.categories);
 
   return (
     <Grid item {...attrs}>
-      <Card raised sx={{ position: "relative" }}>
-        <CardMedia
-          component="img"
-          height="200"
-          image={product.photo + `?v=${product.id}`}
-          alt="t-short"
-        />
-        <CardContent
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            minHeight: "370px",
-            justifyContent: "flex-start",
-          }}
-        >
-          <Box marginBottom={3}>
+      <Card raised sx={{ position: "relative"}}>
+        <CardActionArea onClick={() => navigate(`/catalog/${product.id}`)}>
+          <CardMedia
+            component="img"
+            height="200"
+            image={product.photo + `?v=${product.id}`}
+            alt="t-short"
+          />
+          <CardContent
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-start",
+              minHeight: "250px"
+            }}
+          >
             <Typography gutterBottom variant="h5" component="h5">
               {product.isSale && (
                 <Typography
@@ -59,9 +57,6 @@ export const CatalogItem = ({ attrs, product }) => {
                 </Typography>
               )}{" "}
               {product.title}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" marginBottom={5}>
-              {product.description}
             </Typography>
             <Typography
               component="p"
@@ -127,7 +122,9 @@ export const CatalogItem = ({ attrs, product }) => {
                 readOnly
               />
             </Box>
-          </Box>
+          </CardContent>
+        </CardActionArea>
+        <CardActions>
           <ButtonGroup
             aria-label="product button group"
             sx={{
@@ -150,7 +147,7 @@ export const CatalogItem = ({ attrs, product }) => {
               To cart
             </Button>
           </ButtonGroup>
-        </CardContent>
+        </CardActions>
       </Card>
     </Grid>
   );

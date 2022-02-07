@@ -1,16 +1,21 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Typography, Button } from "@mui/material";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
 import { productActions } from "../../store/product/product.state";
 import { LightSection } from "../../components/Layouts";
+import { Loader } from "../../components/UI";
+import { ProductSection } from "../../components/ProductPage";
+import { Error } from "../../components/Error";
+import { productsActions } from "../../store/products/products.state";
 
 const ProductPage = () => {
   const params = useParams();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { product } = useSelector((state) => state.product);
+  const { product, status, error } = useSelector((state) => state.product);
+  const { categories } = useSelector(
+    (state) => state.products.productsCategory
+  );
 
   useEffect(() => {
     if (!product) {
@@ -18,19 +23,17 @@ const ProductPage = () => {
     }
   }, [product]);
 
+  useEffect(() => {
+    if (!categories) {
+      dispatch(productsActions.loadProductsCategory());
+    }
+  }, [categories]);
+
   return (
     <LightSection>
-      <Typography mb={10} variant="h1" component="h1">
-        {product?.title}
-      </Typography>
-      <Button
-        variant="contained"
-        onClick={() => {
-          navigate("/catalog");
-        }}
-      >
-        Go to catalog
-      </Button>
+      {status === "loading" && <Loader />}
+      {status === "success" && <ProductSection product={product} />}
+      {status === "error" && <Error errorMessage={error} />}
     </LightSection>
   );
 };

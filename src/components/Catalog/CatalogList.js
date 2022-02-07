@@ -12,10 +12,6 @@ export const CatalogList = ({ productsList }) => {
   const { filters, productsCategory } = useSelector((state) => state.products);
 
   useEffect(() => {
-    console.log('render catalog list')
-  })
-
-  useEffect(() => {
     const filter = productsList.filter((product) => {
       const category = Array.isArray(product.category)
         ? product.category.join("")
@@ -92,7 +88,7 @@ export const CatalogList = ({ productsList }) => {
             key={i}
             product={product}
             id={i + 1}
-            attrs={{ xl: 4, minHeight: "400px" }}
+            attrs={{ xl: 4 }}
           />
         ))}
       </Grid>
