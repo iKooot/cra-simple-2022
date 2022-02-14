@@ -11,6 +11,7 @@ export const MyNavLink = ({ children, path = "/", attrs }) => {
         sx={{
           color: "text.primary",
           "&.active": { color: "secondary.main", textDecoration: "underline" },
+          "&:hover": { textDecoration: "underline" },
         }}
         component={RoutingNavLink}
       >

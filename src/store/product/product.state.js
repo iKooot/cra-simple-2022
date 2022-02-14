@@ -1,6 +1,6 @@
 import {createReducer} from "@reduxjs/toolkit";
 import * as productReducers from './reducers/product.reducers';
-import * as productActions from './actions/product.action'
+import * as productActions from './actions/product.actions'
 
 export const INITIAL_STATE = {
     product: null,

@@ -19,6 +19,7 @@ export function useSetFilters() {
 
   const dispatchFilters = () => {
     dispatch(productsActions.setProductsFilters(filters));
+    setFilters(filters);
   };
 
   useEffect(() => {

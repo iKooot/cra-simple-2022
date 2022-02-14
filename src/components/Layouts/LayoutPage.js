@@ -2,6 +2,7 @@ import React from "react";
 import { Grid } from "@mui/material";
 import { Header } from "../Header";
 import { Footer } from "../Footer";
+import { CartDrawer } from "../Cart";
 
 export const LayoutPage = ({ children }) => {
   return (
@@ -16,6 +17,7 @@ export const LayoutPage = ({ children }) => {
     >
       <Grid item mb={2}>
         <Header />
+        <CartDrawer />
       </Grid>
       <Grid item overflow="hidden">
         {children}

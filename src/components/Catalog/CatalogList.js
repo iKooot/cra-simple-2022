@@ -13,10 +13,6 @@ export const CatalogList = ({ productsList }) => {
 
   useEffect(() => {
     const filter = productsList.filter((product) => {
-      const category = Array.isArray(product.category)
-        ? product.category.join("")
-        : [];
-
       if (
         !!filters.byPrice &&
         Math.trunc(product.price) <= filters.byPrice[0]
@@ -84,12 +80,7 @@ export const CatalogList = ({ productsList }) => {
     >
       <Grid container spacing={5}>
         {itemsPerPage.map((product, i) => (
-          <CatalogItem
-            key={i}
-            product={product}
-            id={i + 1}
-            attrs={{ xl: 4 }}
-          />
+          <CatalogItem key={i} product={product} id={i + 1} attrs={{ xl: 4 }} />
         ))}
       </Grid>
       {totalPages > 1 && (

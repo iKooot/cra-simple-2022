@@ -15,11 +15,13 @@ import {
   CardActionArea,
 } from "@mui/material";
 import { useNavigate } from "react-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getProductCategoriesById } from "../../utils/helpers";
+import { cartActions } from "../../store/cart/cart.state";
 
 export const CatalogItem = ({ attrs, product }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { categories } = useSelector(
     (state) => state.products.productsCategory
   );
@@ -27,9 +29,18 @@ export const CatalogItem = ({ attrs, product }) => {
   const categoriesList =
     categories && getProductCategoriesById(categories, product.categories);
 
+  const moveProductToCartHandler = () => {
+    dispatch(cartActions.addProductInOrderList(product));
+  };
+
+  const byOnClickHandler = () => {
+    dispatch(cartActions.addProductInOrderList(product));
+    navigate('/order')
+  };
+
   return (
     <Grid item {...attrs}>
-      <Card raised sx={{ position: "relative"}}>
+      <Card raised sx={{ position: "relative" }}>
         <CardActionArea onClick={() => navigate(`/catalog/${product.id}`)}>
           <CardMedia
             component="img"
@@ -42,7 +53,7 @@ export const CatalogItem = ({ attrs, product }) => {
               display: "flex",
               flexDirection: "column",
               justifyContent: "flex-start",
-              minHeight: "250px"
+              minHeight: "250px",
             }}
           >
             <Typography gutterBottom variant="h5" component="h5">
@@ -131,20 +142,11 @@ export const CatalogItem = ({ attrs, product }) => {
               marginTop: "auto",
             }}
           >
-            <Button
-              variant="contained"
-              onClick={() => {
-                console.log("By on click click");
-              }}
-            >
+            <Button variant="contained" onClick={byOnClickHandler}>
               By on click
             </Button>
-            <Button
-              onClick={() => {
-                console.log("Bto cart click");
-              }}
-            >
-              To cart
+            <Button onClick={moveProductToCartHandler}>
+              Move product to cart
             </Button>
           </ButtonGroup>
         </CardActions>
