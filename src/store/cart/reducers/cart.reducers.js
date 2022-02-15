@@ -16,5 +16,35 @@ export function addProductInOrderList(state, { payload }) {
   } else {
     state.orderList[itemIndex].count += 1;
   }
-  state.totalItemsCount += Number(price);
+  state.totalItemsCount += 1;
+  state.totalPrice += Number(price);
+}
+
+export function subtractProductFromOrderList(state, { payload }) {
+  const itemIndex = state.orderList.findIndex((product) => product.id === payload.id);
+
+  state.totalItemsCount -= state.orderList[itemIndex].count;
+  state.totalPrice -= state.orderList[itemIndex].price;
+
+  if (state.orderList[itemIndex].count > 1) {
+    state.orderList[itemIndex].count -= 1;
+  } else {
+    state.orderList.splice(itemIndex, 1);
+  }
+}
+
+export function removeProductFromOrderList(state, { payload }) {
+  const itemIndex = state.orderList.findIndex((product) => product.id === payload.id);
+
+  const removePrice = state.orderList[itemIndex].count * state.orderList[itemIndex].price
+
+  state.totalPrice -= removePrice
+  state.totalItemsCount -= state.orderList[itemIndex].count
+  state.orderList.splice(itemIndex, 1);
+}
+
+export function clearCart(state) {
+  state.totalItemsCount = 0
+  state.totalPrice = 0
+  state.orderList = []
 }

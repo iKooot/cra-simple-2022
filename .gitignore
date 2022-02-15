@@ -24,3 +24,9 @@ yarn-error.log*
 
 #reference
 _reference
+
+#certificates
+*.pem
+*.crt
+*.pfx
+*.cer
