@@ -4,12 +4,13 @@ import { CatalogItem } from "./CatalogItem";
 import { usePagination } from "../../hooks/usePagination";
 import { useSelector } from "react-redux";
 import { getProductCategoriesById } from "../../utils/helpers";
+import { selectProducts } from '../../ducks/products.duck'
 
 export const CatalogList = ({ productsList }) => {
   const [filteredProducts, setFilteredProducts] = useState(productsList);
   const { setCurrentPage, totalPages, itemsPerPage } =
     usePagination(filteredProducts);
-  const { filters, productsCategory } = useSelector((state) => state.products);
+  const { filters, productsCategory } = useSelector(selectProducts);
 
   useEffect(() => {
     const filter = productsList.filter((product) => {

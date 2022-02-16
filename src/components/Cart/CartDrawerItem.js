@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
-import { cartActions } from "../../store/cart/cart.state";
+import { addProductInOrderList, removeProductFromOrderList, subtractProductFromOrderList } from "../../ducks/cart.duck";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 
@@ -19,15 +19,15 @@ export const CartDrawerItem = ({ product, itemNumber }) => {
   const dispatch = useDispatch();
 
   const removeItemHandler = () => {
-    dispatch(cartActions.removeProductInOrderList(product));
+    dispatch(removeProductFromOrderList(product));
   };
 
   const addItemHandler = () => {
-    dispatch(cartActions.addProductInOrderList(product));
+    dispatch(addProductInOrderList(product));
   };
 
   const subtractItemHandler = () => {
-    dispatch(cartActions.subtractProductInOrderList(product));
+    dispatch(subtractProductFromOrderList(product));
   };
 
   return (

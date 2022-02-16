@@ -1,19 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
-import { themeReducer } from "./theme/theme.state";
-import { productsReducer } from "./products/products.state";
-import { productReducer } from "./product/product.state";
-import { cartReducer } from "./cart/cart.state";
-import { rootWatcher } from "./sagas";
+import cartReducer from "../ducks/cart.duck";
+import themeReducer from "../ducks/theme.duck";
+import productsReducer from "../ducks/products.duck";
+import productReducer from "../ducks/product.duck";
+import { rootWatcher } from "../ducks/sagas";
 
 const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
   reducer: {
+    cart: cartReducer,
     theme: themeReducer,
     products: productsReducer,
     product: productReducer,
-    cart: cartReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

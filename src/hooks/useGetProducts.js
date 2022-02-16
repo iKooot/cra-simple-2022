@@ -1,17 +1,17 @@
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
-import {productsActions} from "../store/products/products.state";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { selectProducts, loadProducts } from "../ducks/products.duck";
 
 export function useGetProducts() {
-    const dispatch = useDispatch();
-    const productsState = useSelector( state => state.products)
-    const { products } = useSelector((state) => state.products);
+  const dispatch = useDispatch();
+  const productsState = useSelector(selectProducts);
+  const { products } = useSelector(selectProducts);
 
-    useEffect(async () => {
-        if (!products) {
-            await dispatch(productsActions.loadProducts());
-        }
-    }, [products]);
+  useEffect(async () => {
+    if (!products) {
+      await dispatch(loadProducts());
+    }
+  }, [products]);
 
-    return {...productsState}
+  return { ...productsState };
 }

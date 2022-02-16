@@ -1,7 +1,7 @@
 import React from "react";
-import { Drawer, Box, Typography, Button, ButtonGroup } from "@mui/material";
+import { Drawer, Box, Typography} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { cartActions } from "../../store/cart/cart.state";
+import { toggleCartDrawer } from "../../ducks/cart.duck";
 import { CartDrawerList } from "./CartDrawerList";
 
 export const CartDrawer = () => {
@@ -13,7 +13,7 @@ export const CartDrawer = () => {
       anchor="right"
       open={isCartDrawerOpen}
       onClose={() => {
-        dispatch(cartActions.toggleCartDrawer());
+        dispatch(toggleCartDrawer());
       }}
     >
       <Box

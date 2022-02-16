@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React from "react";
 import { Typography, Grid } from "@mui/material";
 import { CatalogList } from "../../components/Catalog";
 import CatalogFilters from "../../components/Catalog/CatalogFilters";

@@ -17,24 +17,23 @@ import {
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductCategoriesById } from "../../utils/helpers";
-import { cartActions } from "../../store/cart/cart.state";
+import { addProductInOrderList } from "../../ducks/cart.duck";
+import { selectProducts } from "../../ducks/products.duck";
 
 export const CatalogItem = ({ attrs, product }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { categories } = useSelector(
-    (state) => state.products.productsCategory
-  );
+  const { categories } = useSelector(selectProducts);
 
   const categoriesList =
     categories && getProductCategoriesById(categories, product.categories);
 
   const moveProductToCartHandler = () => {
-    dispatch(cartActions.addProductInOrderList(product));
+    dispatch(addProductInOrderList(product));
   };
 
   const byOnClickHandler = () => {
-    dispatch(cartActions.addProductInOrderList(product));
+    dispatch(addProductInOrderList(product));
     navigate('/order')
   };
 

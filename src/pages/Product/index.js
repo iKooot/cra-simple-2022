@@ -2,30 +2,28 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
-import { productActions } from "../../store/product/product.state";
+import { loadProduct, selectProduct } from "../../ducks/product.duck";
 import { LightSection } from "../../components/Layouts";
 import { Loader } from "../../components/UI";
 import { ProductSection } from "../../components/ProductPage";
 import { Error } from "../../components/Error";
-import { productsActions } from "../../store/products/products.state";
+import { selectProducts, loadProductsCategory } from "../../ducks/products.duck";
 
 const ProductPage = () => {
   const params = useParams();
   const dispatch = useDispatch();
-  const { product, status, error } = useSelector((state) => state.product);
-  const { categories } = useSelector(
-    (state) => state.products.productsCategory
-  );
+  const { product, status, error } = useSelector(selectProduct);
+  const { categories } = useSelector(selectProducts);
 
   useEffect(() => {
     if (!product) {
-      dispatch(productActions.loadProduct(params.cardId));
+      dispatch(loadProduct(params.cardId));
     }
   }, [product]);
 
   useEffect(() => {
     if (!categories) {
-      dispatch(productsActions.loadProductsCategory());
+      dispatch(loadProductsCategory());
     }
   }, [categories]);
 

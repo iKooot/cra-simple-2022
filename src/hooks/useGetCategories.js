@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {productsActions} from "../store/products/products.state";
+import { useDispatch, useSelector } from "react-redux";
+import { loadProductsCategory, selectProducts } from "../ducks/products.duck";
 
 export function useGetCategories() {
-  const dispatch = useDispatch()
-  const {categories, status, error} = useSelector( state => state.products.productsCategory)
+  const dispatch = useDispatch();
+  const {
+    productsCategory: { categories, status, error },
+  } = useSelector(selectProducts);
 
   useEffect(async () => {
     if (!categories) {
-      dispatch(productsActions.loadProductsCategory())
+      dispatch(loadProductsCategory());
     }
-
   }, [categories]);
 
   return {

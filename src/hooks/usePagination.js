@@ -1,17 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { productsActions } from "../store/products/products.state";
+import {
+  setCurrentPage,
+  setTotalPages,
+  selectProducts,
+} from "../ducks/products.duck";
 import { getTotalPagesHelper } from "../utils/helpers";
 
 export function usePagination(initialItems, itemsPerPage = 12) {
   const [items, setItems] = useState(initialItems);
-  const { totalPages, currantPage } = useSelector(
-    (state) => state.products.pagination
-  );
+  const {
+    pagination: { totalPages, currantPage },
+  } = useSelector(selectProducts);
   const dispatch = useDispatch();
 
-  function setCurrentPage(page) {
-    dispatch(productsActions.setCurrentPage(page));
+  function setCurrentPageHandler(page) {
+    dispatch(setCurrentPage(page));
   }
 
   useEffect(() => {
@@ -30,15 +34,11 @@ export function usePagination(initialItems, itemsPerPage = 12) {
   }, [currantPage]);
 
   useEffect(() => {
-    dispatch(
-      productsActions.setTotalPages(
-        getTotalPagesHelper(initialItems.length, 12)
-      )
-    );
+    dispatch(setTotalPages(getTotalPagesHelper(initialItems.length, 12)));
   }, [initialItems]);
 
   return {
-    setCurrentPage,
+    setCurrentPage: setCurrentPageHandler,
     currantPage,
     totalPages,
     itemsPerPage: items,

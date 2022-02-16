@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { productsActions } from "../store/products/products.state";
+import { setProductsFilters, selectProducts } from "../ducks/products.duck";
 
 export function useSetFilters() {
   const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.products);
+  const { products } = useSelector(selectProducts);
   const minMaxPrice = useRef([0, 0]);
   const minMaxRating = useRef([0, 0]);
 
@@ -18,7 +18,7 @@ export function useSetFilters() {
   });
 
   const dispatchFilters = () => {
-    dispatch(productsActions.setProductsFilters(filters));
+    dispatch(setProductsFilters(filters));
     setFilters(filters);
   };
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Button, ButtonGroup, List, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { CartDrawerItem } from "./CartDrawerItem";
-import { cartActions } from "../../store/cart/cart.state";
+import { clearCart, toggleCartDrawer } from "../../ducks/cart.duck";
 import { useNavigate } from "react-router";
 
 export const CartDrawerList = () => {
@@ -11,12 +11,12 @@ export const CartDrawerList = () => {
   const navigate = useNavigate();
 
   const openCartHandler = () => {
-    dispatch(cartActions.toggleCartDrawer());
+    dispatch(toggleCartDrawer());
     navigate("/cart");
   };
 
   const clearCartHandler = () => {
-    dispatch(cartActions.clearCart());
+    dispatch(clearCart());
   };
   return (
     <List>
