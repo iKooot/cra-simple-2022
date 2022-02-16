@@ -2,11 +2,11 @@ import React from "react";
 import { Button, ButtonGroup, List, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { CartDrawerItem } from "./CartDrawerItem";
-import { clearCart, toggleCartDrawer } from "../../ducks/cart.duck";
+import { clearCart, toggleCartDrawer, selectCart } from "../../ducks/cart.duck";
 import { useNavigate } from "react-router";
 
 export const CartDrawerList = () => {
-  const { orderList, totalPrice } = useSelector((state) => state.cart);
+  const { orderList, totalPrice } = useSelector(selectCart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

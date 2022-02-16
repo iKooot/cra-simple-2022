@@ -1,6 +1,6 @@
 import React from "react";
 import { Badge, IconButton } from "@mui/material";
-import { toggleCartDrawer } from "../../ducks/cart.duck";
+import { toggleCartDrawer, selectCart } from "../../ducks/cart.duck";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { styled } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +16,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 export const CartIcon = () => {
   const dispatch = useDispatch();
-  const { totalItemsCount } = useSelector((state) => state.cart);
+  const { totalItemsCount } = useSelector(selectCart);
   return (
     <IconButton
       aria-label="cart"

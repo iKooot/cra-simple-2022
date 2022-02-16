@@ -8,9 +8,10 @@ import imgDark2 from "../../assets/img-dark-2-min.jpeg";
 import imgDark3 from "../../assets/img-dark-3-min.jpeg";
 import { useSelector } from "react-redux";
 import { LightSection } from "../../components/Layouts";
+import { selectTheme } from "../../ducks/theme.duck";
 
 const Home = () => {
-  const { mode } = useSelector((state) => state.theme);
+  const { mode } = useSelector(selectTheme);
 
   return (
     <LightSection>

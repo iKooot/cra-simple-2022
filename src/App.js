@@ -13,9 +13,10 @@ import { useSelector } from "react-redux";
 
 import { routesForRender } from "./navigation/routesForRender";
 import { Loader } from "./components/UI";
+import { selectTheme } from "./ducks/theme.duck";
 
 export function App() {
-  const { mode } = useSelector((store) => store.theme);
+  const { mode } = useSelector(selectTheme);
   const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 
   return (

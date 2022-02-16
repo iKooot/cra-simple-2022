@@ -4,7 +4,7 @@ import cartReducer from "../ducks/cart.duck";
 import themeReducer from "../ducks/theme.duck";
 import productsReducer from "../ducks/products.duck";
 import productReducer from "../ducks/product.duck";
-import { rootWatcher } from "../ducks/sagas";
+import { rootWatcher } from "../ducks/saga.rootReducer";
 
 const sagaMiddleware = createSagaMiddleware();
 

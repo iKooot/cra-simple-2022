@@ -1,12 +1,12 @@
 import React from "react";
 import { Drawer, Box, Typography} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleCartDrawer } from "../../ducks/cart.duck";
+import { toggleCartDrawer, selectCart } from "../../ducks/cart.duck";
 import { CartDrawerList } from "./CartDrawerList";
 
 export const CartDrawer = () => {
   const dispatch = useDispatch();
-  const { isCartDrawerOpen } = useSelector((state) => state.cart);
+  const { isCartDrawerOpen } = useSelector(selectCart);
 
   return (
     <Drawer
