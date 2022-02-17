@@ -16,7 +16,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 export const CartIcon = () => {
   const dispatch = useDispatch();
-  const { totalItemsCount } = useSelector(selectCart);
+  const { totalItemsAmount } = useSelector(selectCart);
   return (
     <IconButton
       aria-label="cart"
@@ -24,7 +24,7 @@ export const CartIcon = () => {
         dispatch(toggleCartDrawer());
       }}
     >
-      <StyledBadge badgeContent={totalItemsCount} color="secondary">
+      <StyledBadge badgeContent={totalItemsAmount} color="secondary">
         <ShoppingCartIcon />
       </StyledBadge>
     </IconButton>

@@ -44,7 +44,7 @@ export const CatalogItem = ({ attrs, product }) => {
           <CardMedia
             component="img"
             height="200"
-            image={product.photo + `?v=${product.id}`}
+            image={product.photo}
             alt="t-short"
           />
           <CardContent

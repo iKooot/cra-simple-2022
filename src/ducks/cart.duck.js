@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   orderList: [],
   totalPrice: 0,
-  totalItemsCount: 0,
+  totalItemsAmount: 0,
   isCartDrawerOpen: false,
 };
 
@@ -22,12 +22,12 @@ const slice = createSlice({
           id,
           title,
           price,
-          count: 1,
+          amount: 1,
         });
       } else {
-        state.orderList[itemIndex].count += 1;
+        state.orderList[itemIndex].amount += 1;
       }
-      state.totalItemsCount += 1;
+      state.totalItemsAmount += 1;
       state.totalPrice += Number(price);
     },
     subtractProductFromOrderList(state, action) {
@@ -36,11 +36,11 @@ const slice = createSlice({
         (product) => product.id === payload.id
       );
 
-      state.totalItemsCount -= state.orderList[itemIndex].count;
+      state.totalItemsAmount -= state.orderList[itemIndex].amount;
       state.totalPrice -= state.orderList[itemIndex].price;
 
-      if (state.orderList[itemIndex].count > 1) {
-        state.orderList[itemIndex].count -= 1;
+      if (state.orderList[itemIndex].amount > 1) {
+        state.orderList[itemIndex].amount -= 1;
       } else {
         state.orderList.splice(itemIndex, 1);
       }
@@ -52,10 +52,10 @@ const slice = createSlice({
       );
 
       const removePrice =
-        state.orderList[itemIndex].count * state.orderList[itemIndex].price;
+        state.orderList[itemIndex].amount * state.orderList[itemIndex].price;
 
       state.totalPrice -= removePrice;
-      state.totalItemsCount -= state.orderList[itemIndex].count;
+      state.totalItemsAmount -= state.orderList[itemIndex].amount;
       state.orderList.splice(itemIndex, 1);
     },
     clearCart(state) {

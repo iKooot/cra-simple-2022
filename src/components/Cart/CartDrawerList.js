@@ -12,7 +12,7 @@ export const CartDrawerList = () => {
 
   const openCartHandler = () => {
     dispatch(toggleCartDrawer());
-    navigate("/cart");
+    navigate("/order");
   };
 
   const clearCartHandler = () => {
@@ -36,7 +36,7 @@ export const CartDrawerList = () => {
           <Typography marginTop={5} component="li">
             <ButtonGroup>
               <Button variant="contained" onClick={openCartHandler}>
-                Open cart
+                Go to order
               </Button>
               <Button onClick={clearCartHandler}>Clear cart</Button>
             </ButtonGroup>

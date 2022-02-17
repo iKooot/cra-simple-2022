@@ -1,11 +1,11 @@
-import { createSlice, createAction } from "@reduxjs/toolkit";
+import { createAction, createSlice } from "@reduxjs/toolkit";
 import { call, put, takeEvery } from "redux-saga/effects";
 import { getProductCategories, getProducts } from "../api/products";
 import { getTotalPagesHelper } from "../utils/helpers";
 
 /***********************************************************
-* DUCK
-************************************************************/
+ * DUCK
+ ************************************************************/
 
 const initialState = {
   products: null,
@@ -88,15 +88,19 @@ export const selectProducts = (rootState) => {
 };
 
 /***********************************************************
-* SAGAS
-************************************************************/
+ * SAGAS
+ ************************************************************/
 
-export const loadProducts = createAction('products/load_products')
-export const loadProductsCategory = createAction('products/load_categories')
+export const loadProducts = createAction("products/load_products");
+export const loadProductsCategory = createAction("products/load_categories");
 
 function* loadProductsSaga() {
   try {
     const products = yield call(getProducts);
+    yield products.forEach((product, i) => {
+      const { photo } = product;
+      product.photo = `${photo}?v=${i + 1}`;
+    });
     yield put(loadProductsSuccess(products));
     yield put(setTotalPages(getTotalPagesHelper(products.length, 12)));
   } catch (error) {

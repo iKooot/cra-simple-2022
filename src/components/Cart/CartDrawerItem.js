@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { addProductInOrderList, removeProductFromOrderList, subtractProductFromOrderList } from "../../ducks/cart.duck";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import {DeleteButton} from "../UI";
 
 export const CartDrawerItem = ({ product, itemNumber }) => {
   const dispatch = useDispatch();
@@ -42,9 +43,7 @@ export const CartDrawerItem = ({ product, itemNumber }) => {
             <IconButton onClick={subtractItemHandler}>
               <RemoveCircleIcon />
             </IconButton>
-            <IconButton color="secondary" onClick={removeItemHandler}>
-              <Delete />
-            </IconButton>
+            <DeleteButton onClick={removeItemHandler} />
           </Box>
         }
       >
@@ -52,10 +51,10 @@ export const CartDrawerItem = ({ product, itemNumber }) => {
           primary={product.title}
           secondary={
             <>
-              <Typography component="span" variant="body2"> Amount: {product.count}</Typography>
+              <Typography component="span" variant="body2"> Amount: {product.amount}</Typography>
               <Typography component="span" variant="body2">
                 {" "}
-                Price: {product.count * product.price}
+                Price: {product.amount * product.price}
               </Typography>
             </>
           }
