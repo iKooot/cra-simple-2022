@@ -8,7 +8,8 @@ import { Loader } from "../../components/UI";
 import { Error } from "../../components/Error";
 
 const Catalog = () => {
-  const { status, error, products } = useGetProducts();
+  const { status, error, itemsPerPage } = useGetProducts();
+
 
   return (
     <LightSection>
@@ -34,7 +35,7 @@ const Catalog = () => {
             Catalog
           </Typography>
           {status === "loading" && <Loader />}
-          {status === "success" && <CatalogList productsList={products} />}
+          {status === "success" && <CatalogList productsList={itemsPerPage} />}
           {status === "error" && <Error errorMessage={error} />}
         </Grid>
       </Grid>

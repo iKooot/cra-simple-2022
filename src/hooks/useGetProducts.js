@@ -4,8 +4,12 @@ import { selectProducts, loadProducts } from "../ducks/products.duck";
 
 export function useGetProducts() {
   const dispatch = useDispatch();
-  const productsState = useSelector(selectProducts);
-  const { products } = useSelector(selectProducts);
+  const {
+    products,
+    error,
+    status,
+    pagination: { itemsPerPage },
+  } = useSelector(selectProducts);
 
   useEffect(async () => {
     if (!products) {
@@ -13,5 +17,5 @@ export function useGetProducts() {
     }
   }, [products]);
 
-  return { ...productsState };
+  return { error, status, itemsPerPage };
 }

@@ -23,7 +23,11 @@ import { selectProducts } from "../../ducks/products.duck";
 export const CatalogItem = ({ attrs, product }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { categories } = useSelector(selectProducts);
+  const {
+    productsCategory: { categories },
+  } = useSelector(selectProducts);
+
+  console.log("render");
 
   const categoriesList =
     categories && getProductCategoriesById(categories, product.categories);
@@ -34,7 +38,7 @@ export const CatalogItem = ({ attrs, product }) => {
 
   const byOnClickHandler = () => {
     dispatch(addProductInOrderList(product));
-    navigate('/order')
+    navigate("/order");
   };
 
   return (
@@ -52,7 +56,7 @@ export const CatalogItem = ({ attrs, product }) => {
               display: "flex",
               flexDirection: "column",
               justifyContent: "flex-start",
-              minHeight: "250px",
+              minHeight: "200px",
             }}
           >
             <Typography gutterBottom variant="h5" component="h5">

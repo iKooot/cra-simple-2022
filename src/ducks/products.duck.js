@@ -1,11 +1,17 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import { call, put, takeEvery } from "redux-saga/effects";
 import { getProductCategories, getProducts } from "../api/products";
-import { getTotalPagesHelper } from "../utils/helpers";
+import {
+  filterProductsByPage,
+  getTotalPagesHelper,
+  getProductCategoriesById,
+} from "../utils/helpers";
 
 /***********************************************************
  * DUCK
  ************************************************************/
+
+const ITEMS_PER_PAGE = 12;
 
 const initialState = {
   products: null,
@@ -16,6 +22,7 @@ const initialState = {
     categories: null,
     error: null,
   },
+  filteredProducts: [],
   filters: {
     byPrice: null,
     byRating: null,
@@ -25,6 +32,7 @@ const initialState = {
     byCategory: [],
   },
   pagination: {
+    itemsPerPage: [],
     currantPage: 1,
     totalPages: 1,
   },
@@ -37,6 +45,7 @@ const slice = createSlice({
     loadProductsSuccess: (state, action) => {
       const { payload } = action;
       state.products = payload;
+      state.filteredProducts = payload;
       state.status = "success";
     },
     loadProductsFailed(state, action) {
@@ -57,14 +66,95 @@ const slice = createSlice({
     setProductsFilters(state, action) {
       const { payload } = action;
       state.filters = { ...payload };
+
+      state.filteredProducts = state.products.filter((product) => {
+        if (
+          !!state.filters.byPrice &&
+          Math.trunc(product.price) <= state.filters.byPrice[0]
+        ) {
+          return false;
+        }
+
+        if (
+          !!state.filters.byPrice &&
+          Math.trunc(product.price) >= state.filters.byPrice[1]
+        ) {
+          return false;
+        }
+
+        if (
+          !!state.filters.rating &&
+          Math.trunc(product.rating) <= state.filters.rating[0]
+        ) {
+          return false;
+        }
+
+        if (
+          !!state.filters.rating &&
+          Math.trunc(product.rating) >= state.filters.rating[1]
+        ) {
+          return false;
+        }
+
+        if (state.filters.byNew && !product.isNew) {
+          return false;
+        }
+
+        if (state.filters.bySale && !product.isSale) {
+          return false;
+        }
+
+        if (state.filters.byStock && !product.isInStock) {
+          return false;
+        }
+
+        if (state.filters.byCategory.length > 0) {
+          const productCat = getProductCategoriesById(
+            state.productsCategory.categories,
+            product.categories
+          )
+            .map((el) => el.name)
+            .join("");
+          const filtersCat = state.filters.byCategory
+            .map((el) => el.name)
+            .join("");
+
+          return productCat.includes(filtersCat);
+        }
+
+        return true;
+      });
+
+      state.pagination.itemsPerPage = filterProductsByPage(
+        state.filteredProducts,
+        ITEMS_PER_PAGE,
+        1
+      );
+      state.pagination.totalPages = getTotalPagesHelper(
+        state.filteredProducts.length,
+        ITEMS_PER_PAGE
+      );
     },
     setCurrentPage(state, action) {
       const { payload } = action;
       state.pagination.currantPage = payload;
+      state.pagination.itemsPerPage = filterProductsByPage(
+        state.products,
+        ITEMS_PER_PAGE,
+        payload
+      );
     },
-    setTotalPages(state, action) {
-      const { payload } = action;
-      state.pagination.totalPages = payload;
+    setPaginationParams(state) {
+      state.pagination.itemsPerPage = filterProductsByPage(
+        state.filteredProducts,
+        ITEMS_PER_PAGE,
+        1
+      );
+
+      state.pagination.totalPages = getTotalPagesHelper(
+        state.filteredProducts.length,
+        ITEMS_PER_PAGE
+      );
     },
   },
 });
@@ -74,13 +164,13 @@ const { reducer, actions } = slice;
 export default reducer;
 
 export const {
-  setTotalPages,
   setProductsFilters,
   loadProductsCategoryFailed,
   loadProductsCategorySuccess,
   setCurrentPage,
   loadProductsSuccess,
   loadProductsFailed,
+  setPaginationParams,
 } = actions;
 
 export const selectProducts = (rootState) => {
@@ -102,7 +192,7 @@ function* loadProductsSaga() {
       product.photo = `${photo}?v=${i + 1}`;
     });
     yield put(loadProductsSuccess(products));
-    yield put(setTotalPages(getTotalPagesHelper(products.length, 12)));
+    yield put(setPaginationParams());
   } catch (error) {
     console.error("Saga error");
     yield put(loadProductsFailed(error));
