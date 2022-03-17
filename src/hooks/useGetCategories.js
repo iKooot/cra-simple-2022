@@ -1,18 +1,23 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { loadProductsCategory, selectProducts } from "../ducks/products.duck";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setProductsCategories } from "../ducks/products.duck";
+import { useQuery } from "react-query";
+import { getProductCategories } from "../api/products";
 
 export function useGetCategories() {
   const dispatch = useDispatch();
-  const {
-    productsCategory: { categories, status, error },
-  } = useSelector(selectProducts);
+  const [categories, setCategories] = useState([]);
 
-  useEffect(async () => {
-    if (!categories) {
-      dispatch(loadProductsCategory());
+  const { error, status, data } = useQuery("productsCategories", async () => {
+    return await getProductCategories();
+  });
+
+  useEffect(() => {
+    if (status === "success") {
+      setCategories(data);
+      dispatch(setProductsCategories(categories));
     }
-  }, [categories]);
+  }, [status]);
 
   return {
     error,

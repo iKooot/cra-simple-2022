@@ -23,14 +23,10 @@ import { selectProducts } from "../../ducks/products.duck";
 export const CatalogItem = ({ attrs, product }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {
-    productsCategory: { categories },
-  } = useSelector(selectProducts);
-
-  console.log("render");
+  const { productsCategories } = useSelector(selectProducts);
 
   const categoriesList =
-    categories && getProductCategoriesById(categories, product.categories);
+      productsCategories && getProductCategoriesById(productsCategories, product.categories);
 
   const moveProductToCartHandler = () => {
     dispatch(addProductInOrderList(product));

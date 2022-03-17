@@ -17,11 +17,7 @@ const initialState = {
   products: null,
   status: "loading",
   error: null,
-  productsCategory: {
-    status: "loading",
-    categories: null,
-    error: null,
-  },
+  productsCategories: null,
   filteredProducts: [],
   filters: {
     byPrice: null,
@@ -53,15 +49,9 @@ const slice = createSlice({
       state.error = payload.message;
       state.status = "error";
     },
-    loadProductsCategorySuccess(state, action) {
+    setProductsCategories(state, action) {
       const { payload } = action;
-      state.productsCategory.categories = payload;
-      state.productsCategory.status = "success";
-    },
-    loadProductsCategoryFailed(state, action) {
-      const { payload } = action;
-      state.productsCategory.error = payload.message;
-      state.productsCategory.status = "error";
+      state.productsCategories = payload;
     },
     setProductsFilters(state, action) {
       const { payload } = action;
@@ -110,7 +100,7 @@ const slice = createSlice({
 
         if (state.filters.byCategory.length > 0) {
           const productCat = getProductCategoriesById(
-            state.productsCategory.categories,
+            state.productsCategories,
             product.categories
           )
             .map((el) => el.name)
@@ -165,8 +155,7 @@ export default reducer;
 
 export const {
   setProductsFilters,
-  loadProductsCategoryFailed,
-  loadProductsCategorySuccess,
+  setProductsCategories,
   setCurrentPage,
   loadProductsSuccess,
   loadProductsFailed,
@@ -199,17 +188,6 @@ function* loadProductsSaga() {
   }
 }
 
-function* loadProductsCategorySaga() {
-  try {
-    const products = yield call(getProductCategories);
-    yield put(loadProductsCategorySuccess(products));
-  } catch (error) {
-    console.error("Saga error");
-    yield put(loadProductsCategoryFailed(error));
-  }
-}
-
 export function* productsWatcher() {
   yield takeEvery(loadProducts, loadProductsSaga);
-  yield takeEvery(loadProductsCategory, loadProductsCategorySaga);
 }
