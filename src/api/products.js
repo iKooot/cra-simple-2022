@@ -1,17 +1,17 @@
-import { configureHttpRequest } from "./httpClient";
+import { get, post } from "./httpClient";
 
 export function getProductCategories() {
-  return configureHttpRequest("GET", "/categories");
+  return get("/categories");
 }
 
 export function getProducts() {
-  return configureHttpRequest("GET", "/products");
+  return get("/products");
 }
 
 export function getProductById(productId) {
-  return configureHttpRequest("GET", `/products/${productId}`);
+  return get(`/products/${productId}`);
 }
 
 export function postOrder(payload) {
-  return configureHttpRequest("POST", "/order", payload);
+  return post("/order", payload);
 }

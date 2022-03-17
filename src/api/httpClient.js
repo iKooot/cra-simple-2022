@@ -1,86 +1,35 @@
-// import axios from "axios";
-// import { ClientHttpError, HttpError, RedirectHttpError, ServerHttpError, NoNetworkHttpError, UnknownError} from './errors'
+import axios from "axios";
 
-const baseURL = "https://61f5558a62f1e300173c40f3.mockapi.io";
+const controller = new AbortController();
+const signal = controller.signal;
 
-let controller = new AbortController();
-let signal = controller.signal;
+const axiosConf = () =>
+  axios.create({
+    baseURL: "https://61f5558a62f1e300173c40f3.mockapi.io",
+    signal,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-export async function configureHttpRequest(method, url, payload) {
+export const genericRequest = async (requestType, url, data) => {
   try {
-    if (method === "GET") {
-      const resp = await fetch(baseURL + url, {
-        method,
-        signal,
-      });
-
-      if (!resp.ok) throw new Error("Bad response form the server");
-
-      const data = await resp.json();
-
-      return data;
-    }
-
-    if (method === "POST") {
-      const resp = await fetch(baseURL + url, {
-        method,
-        signal,
-        body: JSON.stringify(payload),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!resp.ok) throw new Error("Bad response form the server");
-
-      console.log(resp);
-    }
+    const httpClient = axiosConf();
+    const response = await httpClient[requestType](url, data);
+    return response.data;
   } catch (error) {
-    throw new Error(error);
+    if (axios.isAxiosError(error) && error.response) {
+      console.error(error.response);
+    } else {
+      throw new Error("UnknownError");
+    }
   }
+};
+
+export async function post(url, data) {
+  return genericRequest("post", url, data);
 }
 
-// export function configureHttpClient() {
-//   return axios.create({
-//     baseURL,
-//     headers: {
-//       put: {
-//         "Content-Type": "application/json",
-//       },
-//     },
-//   });
-// }
-
-// function handleHttpClientError(response) {
-//   if (response.status >= 300 && response.status < 400) {
-//     return new RedirectHttpError(
-//         response.status,
-//         response.statusText,
-//         response.request.responseUrl
-//     );
-//   }
-//
-//   if (response.status >= 400 && response.status < 500) {
-//     return new ClientHttpError(response.status, response.request?._response || response.statusText);
-//   }
-//
-//   return new ServerHttpError(response.status, response.statusText);
-// }
-//
-// async function genericRequest(
-//     requestType,
-//     url,
-//     data,
-// ) {
-//   try {
-//     const httpClient = configureHttpClient();
-//     const response = await httpClient[requestType](url, data);
-//     return response.data;
-//   } catch (error) {
-//     if (axios.isAxiosError(error) && error.response) {
-//       throw handleHttpClientError(error.response);
-//     } else {
-//       throw new UnknownError(error);
-//     }
-//   }
-// }
+export async function get(url, data) {
+  return genericRequest("get", url, data);
+}
