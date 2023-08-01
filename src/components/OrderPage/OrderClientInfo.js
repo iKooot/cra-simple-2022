@@ -1,7 +1,14 @@
-import React from 'react';
+import React from "react";
+import { InfoForm } from "../Forms/InfoForm";
+import { useDispatch } from "react-redux";
+import { setCustomerInfo } from "../../ducks/order.duck";
 
 export function OrderClientInfo() {
-    return (
-        <div>here fill be form</div>
-    );
+  const dispatch = useDispatch();
+
+  const submitHandler = (data) => {
+    dispatch(setCustomerInfo(data));
+  };
+
+  return <InfoForm onSubmit={submitHandler} />;
 }

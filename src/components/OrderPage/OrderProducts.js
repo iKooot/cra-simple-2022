@@ -10,12 +10,13 @@ import {
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useOrderTableData } from "../../hooks/useOrderTableData";
-import {DeleteButton} from "../UI";
-import {removeProductFromOrderList, selectCart} from "../../ducks/cart.duck";
+import { DeleteButton } from "../UI";
+import { removeProductFromOrderList, selectCart } from "../../ducks/cart.duck";
 
 export function OrderProducts() {
   const dispatch = useDispatch();
-  const { totalPrice: totalOrderPrice, totalItemsAmount: totalOrderAmount } = useSelector(selectCart);
+  const { totalPrice: totalOrderPrice, totalItemsAmount: totalOrderAmount } =
+    useSelector(selectCart);
   const { tableHeaderCalls, orderList } = useOrderTableData();
 
   return (
@@ -35,16 +36,24 @@ export function OrderProducts() {
                 {tableHeaderCalls.map((cell) => {
                   if (cell.attrs === "photo") {
                     return (
-                      <TableCell>
-                        <Box component="img" src={product[cell.attrs]} sx={{width: "100px", height: "auto"}}/>
+                      <TableCell key={cell.attrs + product.id}>
+                        <Box
+                          component="img"
+                          src={product[cell.attrs]}
+                          sx={{ width: "100px", height: "auto" }}
+                        />
                       </TableCell>
                     );
                   }
 
                   if (cell.attrs === "remove") {
                     return (
-                      <TableCell>
-                        <DeleteButton onClick={() => {dispatch(removeProductFromOrderList(product))}} />
+                      <TableCell key={cell.attrs + product.id}>
+                        <DeleteButton
+                          onClick={() => {
+                            dispatch(removeProductFromOrderList(product));
+                          }}
+                        />
                       </TableCell>
                     );
                   }
@@ -60,18 +69,22 @@ export function OrderProducts() {
             <TableRow>
               {tableHeaderCalls.map((cell) => {
                 if (cell.attrs === "title") {
-                  return <TableCell key={cell.attrs}>Total count:</TableCell>
+                  return <TableCell key={cell.attrs}>Total count:</TableCell>;
                 }
 
                 if (cell.attrs === "totalPrice") {
-                  return <TableCell key={cell.attrs}>{totalOrderPrice}</TableCell>
+                  return (
+                    <TableCell key={cell.attrs}>{totalOrderPrice}</TableCell>
+                  );
                 }
 
                 if (cell.attrs === "amount") {
-                  return <TableCell key={cell.attrs}>{totalOrderAmount}</TableCell>
+                  return (
+                    <TableCell key={cell.attrs}>{totalOrderAmount}</TableCell>
+                  );
                 }
 
-                return <TableCell key={cell.attrs} />
+                return <TableCell key={cell.attrs} />;
               })}
             </TableRow>
           </TableBody>

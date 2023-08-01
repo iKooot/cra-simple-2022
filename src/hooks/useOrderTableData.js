@@ -19,7 +19,6 @@ export function useOrderTableData() {
 
   useEffect(() => {
     if (products) return;
-    console.log("here");
     dispatch(loadProducts());
   }, [dispatch]);
 

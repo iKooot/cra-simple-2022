@@ -9,6 +9,7 @@ import imgDark3 from "../../assets/img-dark-3-min.jpeg";
 import { useSelector } from "react-redux";
 import { LightSection } from "../../components/Layouts";
 import { selectTheme } from "../../ducks/theme.duck";
+import { NavButton } from "../../components/UI/NavButton";
 
 const Home = () => {
   const { mode } = useSelector(selectTheme);
@@ -17,7 +18,12 @@ const Home = () => {
     <LightSection>
       <Grid container spacing={10}>
         <Grid item sx={{ maxWidth: "50%" }}>
-          <Typography variant="h1" component="h1" marginBottom={2}>
+          <Typography
+            variant="h1"
+            component="h1"
+            marginBottom={2}
+            color="sectionLight.headline"
+          >
             Welcome to the <br /> Cool Store
           </Typography>
           <Typography variant="p" component="p" marginBottom={10}>
@@ -26,9 +32,12 @@ const Home = () => {
             culpa deleniti eaque incidunt maxime officia placeat provident qui
             repudiandae unde, voluptas. Quibusdam, velit!
           </Typography>
-          <Button size="large" variant="contained">
+          <NavButton
+            attrs={{ size: "large", variant: "contained" }}
+            to="/catalog"
+          >
             Go to the catalog
-          </Button>
+          </NavButton>
         </Grid>
         <Grid item>
           <Box

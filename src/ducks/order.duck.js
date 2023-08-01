@@ -37,6 +37,14 @@ const slice = createSlice({
           step.done = true
         }
       })
+    },
+    setCustomerInfo(state, action) {
+      state.customerInfo = action.payload
+    },
+    clearOrder(state) {
+      state.steps = initialState.steps
+      state.activeStep = initialState.activeStep
+      state.customerInfo = initialState.customerInfo
     }
   },
 });
@@ -45,6 +53,6 @@ const { reducer, actions } = slice;
 
 export default reducer;
 
-export const { nextStep, prevStep, setStepDone } = actions;
+export const { nextStep, prevStep, setStepDone, setCustomerInfo, clearOrder } = actions;
 
 export const selectOrder = (state) => state.order;
